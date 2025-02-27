@@ -38,6 +38,8 @@ public class BookServiceImpl implements BookService {
         //Below we us the builder pattern(a design pattern used to 'build' complex objects. By utilizing the build pattern we call a series of methods to set each property individually and finish with the build() call to create the object, this is different from using setters b/c each property we 'set' here is immutbale which can prevent bugs that could occur from unexpected property changes )
         return BookEntity.builder()
         .isbn(book.getIsbn())
+        .id(book.getId())
+        .genre(book.getGenre())
         .title(book.getTitle())
         .author(book.getAuthor())
         .build();
@@ -46,6 +48,8 @@ public class BookServiceImpl implements BookService {
     private Book bookEntityToBook(BookEntity bookEntity) {
         return Book.builder()
         .isbn(bookEntity.getIsbn())
+        .id(bookEntity.getId())
+        .genre(bookEntity.getGenre())
         .title(bookEntity.getTitle())
         .author(bookEntity.getAuthor())
         .build();
