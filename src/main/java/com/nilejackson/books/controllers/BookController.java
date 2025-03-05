@@ -7,11 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.nilejackson.books.domain.Book;
 import com.nilejackson.books.services.BookService;
 
-@Controller //The controller annotation marks a class as a web controller(a thing that handles HTTP requests) which is a Spring Component. Due to the fact that the @Controller class is a Spring Component means that classes declared with this annotation are all eligble for dependency injection
+@RestController //The controller annotation marks a class as a web controller(a thing that handles HTTP requests) which is a Spring Component. Due to the fact that the @Controller class is a Spring Component means that classes declared with this annotation are all eligble for dependency injection
 public class BookController {
 
     private final BookService bookService;
@@ -29,7 +30,7 @@ public class BookController {
     @PutMapping(path = "/book/{isbn}")
     public ResponseEntity<Book> createBook(@PathVariable final String isbn, @RequestBody final Book book) {
             book.setIsbn(isbn);
-            final Book savedBook = bookService.create(book);
+            final Book savedBook = bookService.createBook(book);
             final ResponseEntity<Book> response = new ResponseEntity<Book>(savedBook, HttpStatus.CREATED);
             return response;
         

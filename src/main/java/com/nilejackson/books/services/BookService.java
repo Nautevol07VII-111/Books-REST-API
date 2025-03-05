@@ -4,5 +4,5 @@ import com.nilejackson.books.domain.Book;
 
 public interface BookService {
    
-    Book create(Book book);
+    Book createBook(Book book);
 }

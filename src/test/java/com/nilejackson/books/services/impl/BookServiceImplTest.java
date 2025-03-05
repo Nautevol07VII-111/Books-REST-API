@@ -37,7 +37,7 @@ public class BookServiceImplTest {
         //*In reference to the line below* When the save method is called with something that equals bookEntity, then return bookEntity." The eq() matcher is important because it matches based on object equality rather than object identity, which is usually what's preferred when testing with mocks.
         when(bookrepository.save(eq(bookEntity))).thenReturn(bookEntity);
 
-        final Book result = underTest.create(book);
+        final Book result = underTest.createBook(book);
         assertEquals(book, result);
     }
 }

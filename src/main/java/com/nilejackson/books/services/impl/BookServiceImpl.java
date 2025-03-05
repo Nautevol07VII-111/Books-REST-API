@@ -20,7 +20,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book create(final Book book) {
+    public Book createBook(final Book book) {
          // Step 1: Convert the incoming Book (API/domain model) to a BookEntity (database model)
         // Think of this as translating from "web language" to "database language"
        final BookEntity bookEntity = bookToBookEntity(book); 
