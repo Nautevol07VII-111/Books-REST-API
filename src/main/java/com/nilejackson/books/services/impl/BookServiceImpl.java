@@ -1,4 +1,6 @@
 package com.nilejackson.books.services.impl;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.nilejackson.books.domain.BookEntity;
@@ -54,6 +56,13 @@ public class BookServiceImpl implements BookService {
         .author(bookEntity.getAuthor())
         .build();
     }
+
+    @Override
+    public Optional<Book> findById(Long Id) {
+        final Optional<BookEntity> foundBook = bookRepository.findById(Id);
+        return foundBook.map(book -> bookEntityToBook(book));
+    }
+        
 
     
 }
