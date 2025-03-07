@@ -6,6 +6,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,11 +45,40 @@ public class BookServiceImplTest {
         assertEquals(book, result);
     }
 
+//Added this for bookEntity scope in test below it
+    private BookEntity testBookEntity() {
+      
+        BookEntity entity = new BookEntity();
+        
+        return entity;
+    }
+
     @Test
     public  void testThatFindByIdReturnsEmptyWhenNoBookIsPresent() {
-        final Long Id = 5555555L;
-        when(bookrepository.findById(eq(Id))).thenReturn(Optional.empty());
+        
+        final Book book = testBook();
+
+         final BookEntity bookEntity = testBookEntity();
+
+        when(bookrepository.findById(eq(book.getId()))).thenReturn(Optional.of(bookEntity));
         final Optional<Book> result = underTest.findById(5555555L);
         assertEquals(Optional.empty(), result);
     }
+ private Book testBook() {
+    Book book = new Book();
+
+    return book;
+ }
+    
+    @Test
+    
+    public void testThatFindByIdReturnsBookWhenBookExists() {
+        final Book book = testBook();
+        final BookEntity bookEntity = testBookEntity();
+
+        when(bookrepository.findById(eq(book.getId()))).thenReturn(Optional.of(bookEntity));
+        final Optional<Book> result = underTest.findById(book.getId());
+        assertEquals(Optional.of(book), result);
+    }
+
 }
