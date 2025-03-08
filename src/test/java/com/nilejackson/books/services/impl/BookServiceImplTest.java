@@ -6,8 +6,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,10 +13,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.nilejackson.books.domain.BookEntity;
-import static com.nilejackson.books.TestData.testBook;
 import static com.nilejackson.books.TestData.tesBookEntity;
 
-import com.nilejackson.books.services.BookService;
 import com.nilejackson.books.domain.Book;
 import com.nilejackson.books.repositories.BookRepository;
 
