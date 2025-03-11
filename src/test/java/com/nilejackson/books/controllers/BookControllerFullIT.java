@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Optional;
 
@@ -50,5 +51,10 @@ public class BookControllerFullIT {
                 .andExpect(jsonPath("$.author").value(testBook.getAuthor()))
                 .andExpect(jsonPath("$.isbn").value(testBook.getIsbn()))
                 .andExpect(jsonPath("$.genre").value(testBook.getGenre()));
+    }
+
+    @Test 
+    public void tesdToEnsureThatRetrievedBookReturns404WhenFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/books/{id}")).andExpect(status().isNotFound());
     }
 }
