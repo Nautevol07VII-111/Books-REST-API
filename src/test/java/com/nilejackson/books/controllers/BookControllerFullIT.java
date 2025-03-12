@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Optional;
 
@@ -54,7 +55,8 @@ public class BookControllerFullIT {
     }
 
     @Test 
+    @GetMapping("/book/{id}")
     public void tesdToEnsureThatRetrievedBookReturns404WhenFound() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/books/{id}")).andExpect(status().isNotFound());
+        mockMvc.perform(MockMvcRequestBuilders.get("/book/{id}", 1L)).andExpect(status().isNotFound());
     }
 }

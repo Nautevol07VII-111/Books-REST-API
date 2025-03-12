@@ -39,11 +39,13 @@ public class BookController {
 
 
     
-    @GetMapping(path = "/books/{id}")
-    public ResponseEntity<Book> retrieveBook(@PathVariable final Long idLong) {
+    @GetMapping(path = "/book/{id}")
+    public ResponseEntity<Book> retrieveBook(@PathVariable final Long id) {
         
-        final Optional<Book> foundBook = bookService.findById(null);
-        return foundBook.map(book -> new ResponseEntity<Book>(book, HttpStatus.OK)).orElse(new ResponseEntity<Book>(HttpStatus.NOT_FOUND));
+        final Optional<Book> foundBook = bookService.findById(id);
+        return foundBook
+        .map(book -> new ResponseEntity<Book>(book, HttpStatus.OK))
+        .orElse(new ResponseEntity<Book>(HttpStatus.NOT_FOUND));
 
     }
 
