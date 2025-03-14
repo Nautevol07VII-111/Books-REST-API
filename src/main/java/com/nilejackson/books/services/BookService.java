@@ -3,8 +3,6 @@ package com.nilejackson.books.services;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
-
 import com.nilejackson.books.domain.Book;
 
 public interface BookService {
@@ -14,5 +12,5 @@ public interface BookService {
     
     public Optional<Book> findById(Long Id);
 
-    public ResponseEntity<List<Book>> findAll();
+    public List<Book> findAll();
 }

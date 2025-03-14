@@ -1,5 +1,6 @@
 package com.nilejackson.books.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,15 @@ public class BookController {
         .map(book -> new ResponseEntity<Book>(book, HttpStatus.OK))
         .orElse(new ResponseEntity<Book>(HttpStatus.NOT_FOUND));
 
+    }
+
+    @GetMapping("/book/")
+    public ResponseEntity<List<Book>> getAllBooks() {
+        List<Book> book = bookService.findAll();
+
+        if(book.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } return new ResponseEntity<List<Book>>(HttpStatus.OK);
     }
 
 
