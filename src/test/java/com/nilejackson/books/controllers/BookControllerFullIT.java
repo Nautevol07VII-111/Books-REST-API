@@ -10,7 +10,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.JsonPathResultMatchers;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Optional;
@@ -56,7 +59,29 @@ public class BookControllerFullIT {
 
     @Test 
     @GetMapping("/book/{id}")
-    public void tesdToEnsureThatRetrievedBookReturns404WhenFound() throws Exception {
+    public void testToEnsureThatRetrievedBookReturns404WhenFound() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/book/{id}", 1L)).andExpect(status().isNotFound());
+    }
+
+
+
+
+    @Test 
+    public void testThatretrieveBookReturnsBookWhenBookExists() throws Exception {
+     
+        Book testBook = TestData.testBook();
+
+        Long testId = 1L;
+
+        when(bookService.findById(testId)).thenReturn(Optional.of(testBook));
+
+
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/book/{id}", testId))
+        .andExpect(status().isOk())
+       
+       .andExpect(jsonPath("$.title").value(testBook.getTitle()));
+
+      
     }
 }
