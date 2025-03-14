@@ -4,18 +4,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nilejackson.books.TestData;
 import com.nilejackson.books.domain.Book;
 import com.nilejackson.books.services.BookService;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.JsonPathResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -23,14 +27,21 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(BookController.class)  
+@WebMvcTest(BookController.class) 
 public class BookControllerFullIT {
 
     @Autowired
     private MockMvc mockMvc;
     
-    @MockBean  
+    private BookController bookController;
+    @MockBean
     private BookService bookService;
+
+    @BeforeEach
+    public void setup() {
+        bookController = new BookController(bookService);
+        mockMvc = MockMvcBuilders.standaloneSetup(bookController).build();
+    }
     
     @Autowired
     private ObjectMapper objectMapper;
@@ -84,4 +95,30 @@ public class BookControllerFullIT {
 
       
     }
+
+
+    
+    
+
+    @Test 
+    public void testThatGetAllBooksReturnsBookList() throws Exception {
+     
+        final Book book = TestData.testBook();
+        bookService.createBook(book);
+
+        Book savedBook = book;
+        savedBook.setId(1L);
+
+        when(bookService.createBook(any(Book.class))).thenReturn(savedBook);
+        when(bookService.findAll()).thenReturn(Collections.singletonList(savedBook));
+
+
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/book/"))
+        .andExpect(status().isOk());
+
+
+    }
+      
+    
 }
