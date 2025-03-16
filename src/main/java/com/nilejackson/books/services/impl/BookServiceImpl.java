@@ -1,5 +1,6 @@
 package com.nilejackson.books.services.impl;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,8 +68,11 @@ public class BookServiceImpl implements BookService {
     
 
     @Override
-    public java.util.List<Book> findAll() {
-return null;
+    public java.util.List listBooks() {
+     java.util.List<BookEntity> foundBookList = ((BookService) bookRepository).listBooks();
+     return foundBookList.stream()
+     .map(entity -> bookEntityToBook(entity))
+     .collect(Collectors.toList());
     }
         
 
