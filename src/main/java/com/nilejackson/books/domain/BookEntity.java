@@ -1,5 +1,8 @@
 package com.nilejackson.books.domain;
 
+import java.io.ObjectInputFilter.Status;
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,4 +27,21 @@ public class BookEntity {
     private String isbn;
     private String title; 
     private String genre;
+    private boolean isCheckedOut;
+    private Status status;
+    private Date checkOutDate;
+
+    public void checkOut() {
+        this.isCheckedOut = true;
+    }
+
+    public void returnBook() {
+        this.isCheckedOut = false;
+    }
+    
+    
+    public boolean isCheckedOut() {
+        
+        return this.isCheckedOut;
+    }
 }
