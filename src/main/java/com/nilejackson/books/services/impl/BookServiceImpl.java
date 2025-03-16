@@ -1,6 +1,7 @@
 package com.nilejackson.books.services.impl;
 import java.util.Optional;
 
+import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.nilejackson.books.domain.BookEntity;
@@ -61,6 +62,13 @@ public class BookServiceImpl implements BookService {
     public Optional<Book> findById(Long Id) {
         final Optional<BookEntity> foundBook = bookRepository.findById(Id);
         return foundBook.map(book -> bookEntityToBook(book));
+    }
+
+    
+
+    @Override
+    public java.util.List<Book> findAll() {
+return null;
     }
         
 
