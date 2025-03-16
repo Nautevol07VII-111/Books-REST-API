@@ -74,6 +74,16 @@ public class BookServiceImpl implements BookService {
      .map(entity -> bookEntityToBook(entity))
      .collect(Collectors.toList());
     }
+
+    @Override 
+    public java.util.List<Book> findAll() {
+        java.util.List<BookEntity> allBookEntities = bookRepository.findAll();
+
+        return allBookEntities.stream()
+        .filter(entity -> !((BookEntity) entity).isCheckedOut())
+        .map(entity -> bookEntityToBook(entity))
+        .collect(Collectors.toList());
+    }
         
 
     
