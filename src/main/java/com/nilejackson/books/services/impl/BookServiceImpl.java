@@ -2,7 +2,8 @@ package com.nilejackson.books.services.impl;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.hibernate.mapping.List;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.nilejackson.books.domain.BookEntity;
@@ -67,17 +68,17 @@ public class BookServiceImpl implements BookService {
 
     
 
-    @Override
-    public java.util.List listBooks() {
-     java.util.List<BookEntity> foundBookList = ((BookService) bookRepository).listBooks();
+   @Override
+    public List<Book> listBooks() {
+     List<BookEntity> foundBookList = bookRepository.findAll();
      return foundBookList.stream()
      .map(entity -> bookEntityToBook(entity))
      .collect(Collectors.toList());
     }
 
     @Override 
-    public java.util.List<Book> findAll() {
-        java.util.List<BookEntity> allBookEntities = bookRepository.findAll();
+    public List<Book> findAll() {
+        List<BookEntity> allBookEntities = bookRepository.findAll();
 
         return allBookEntities.stream()
         .filter(entity -> !((BookEntity) entity).isCheckedOut())

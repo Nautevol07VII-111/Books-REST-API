@@ -1,5 +1,7 @@
 package com.nilejackson.books.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -20,5 +22,6 @@ public class Book {
     private String isbn;
     private String title; 
     private String genre;
+    private List<Book> relatedBooks;
     
 }
