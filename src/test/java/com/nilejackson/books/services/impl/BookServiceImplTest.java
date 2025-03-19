@@ -2,14 +2,19 @@ package com.nilejackson.books.services.impl;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,6 +36,11 @@ public class BookServiceImplTest {
     
     @InjectMocks
     private BookServiceImpl underTest;
+
+    @Mock
+    private BookService bookService;
+
+   
     //This ensures that when we create or save a book, we can then have that same book returned(this helps solidify our persistence layer)
     @Test
     public void testThatBookIsSaved() {
@@ -90,5 +100,52 @@ public class BookServiceImplTest {
 
         assertTrue(result.isEmpty());
     }
+
+    @Test
+    public void findAll_ReturnsOnlyAvailableBooks() {
+       
+        BookEntity availableBook1 = testBookEntity();
+        availableBook1.setId(1L);
+        availableBook1.setTitle("The Manchurian Candidate");
+        availableBook1.setCheckedOut(false);
+
+        BookEntity availableBook2 = testBookEntity();
+        availableBook2.setId(2L);
+        availableBook2.setTitle("Mile High");
+        availableBook2.setCheckedOut(false);
+
+        BookEntity checkedOutBook1 = testBookEntity();
+        checkedOutBook1.setId(3L);
+        checkedOutBook1.setTitle("Prizzi's Honor");
+        checkedOutBook1.setCheckedOut(true);
+
+        BookEntity checkedOutBook2 = testBookEntity();
+        checkedOutBook2.setId(4L);
+        checkedOutBook2.setTitle("The Oldest Confession");
+        checkedOutBook2.setCheckedOut(true);
+
+
+        List<BookEntity> allBooks = new ArrayList<>();
+            allBooks.add(availableBook1);
+            allBooks.add(availableBook2);
+            allBooks.add(checkedOutBook1);
+            allBooks.add(checkedOutBook2);
+
+       when(bookrepository.findAll()).thenReturn(allBooks);
+
+       List<Book> result = underTest.findAll();
+
+       assertEquals(2, result.size());
+
+       List<Long> resultIds = result.stream()
+       .map(Book::getId)
+       .collect(Collectors.toList());
+
+       assertTrue(resultIds.contains(1L));
+       assertTrue(resultIds.contains(2L));
+       assertFalse(resultIds.contains(3L));
+       assertFalse(resultIds.contains(4L));
+    }
+           
 
 }
