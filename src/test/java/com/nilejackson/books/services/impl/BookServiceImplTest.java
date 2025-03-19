@@ -1,9 +1,13 @@
 package com.nilejackson.books.services.impl;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -17,6 +21,7 @@ import static com.nilejackson.books.TestData.tesBookEntity;
 
 import com.nilejackson.books.domain.Book;
 import com.nilejackson.books.repositories.BookRepository;
+import com.nilejackson.books.services.BookService;
 
 @ExtendWith(MockitoExtension.class)
 public class BookServiceImplTest {
@@ -75,6 +80,15 @@ public class BookServiceImplTest {
         when(bookrepository.findById(eq(book.getId()))).thenReturn(Optional.of(bookEntity));
         final Optional<Book> result = underTest.findById(book.getId());
         assertEquals(Optional.of(book), result);
+    }
+
+    @Test 
+    public void listBooksReturnsEmptyListWhenNoBooksExist() {
+        when(bookrepository.findAll()).thenReturn(Collections.emptyList());
+
+        List<Book> result = underTest.listBooks();
+
+        assertTrue(result.isEmpty());
     }
 
 }
