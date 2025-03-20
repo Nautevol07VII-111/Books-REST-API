@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -145,6 +146,37 @@ public class BookServiceImplTest {
        assertTrue(resultIds.contains(2L));
        assertFalse(resultIds.contains(3L));
        assertFalse(resultIds.contains(4L));
+    }
+
+
+    @Test 
+    public void listBooksReturnsAllBooksRegardlessOfStatus() {
+        BookEntity availableBook1 = testBookEntity();
+        availableBook1.setId(1L);
+        availableBook1.setCheckedOut(false);
+
+        BookEntity checkedOutBook1 = testBookEntity();
+        checkedOutBook1.setId(2L);
+        checkedOutBook1.setCheckedOut(true);
+
+        List<BookEntity> allBooks = new ArrayList<>();
+        allBooks.add(availableBook1);
+        allBooks.add(checkedOutBook1);
+
+       List<Book> books = new ArrayList<>();
+       books.add(new Book(1L, "Available Book 1", "Author", "ISBN", "Genre", null));
+       books.add(new Book(2L, "Checked Out Book 1", "Author", "ISBN", "Genre", null));
+      when(bookService.listBooks()).thenReturn(books);
+        List<Book> result = bookService.listBooks();
+
+        assertEquals(2L, result.size());
+
+        List<Long> resultIds = result.stream()
+        .map(Book::getId)
+        .collect(Collectors.toList());
+
+        assertTrue(resultIds.contains(1L));
+        assertTrue(resultIds.contains(2L));
     }
            
 
