@@ -50,13 +50,23 @@ public class BookController {
 
     }
 
-    @GetMapping("/book/")
+    @GetMapping("/book/available")
     public ResponseEntity<List<Book>> getAllBooks() {
         List<Book> book = bookService.findAll();
 
         if(book.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } return new ResponseEntity<List<Book>>(HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/book/all")
+    public ResponseEntity<List<Book>> listBooks() {
+        List<Book> book =bookService.listBooks();
+        if(book.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } return new ResponseEntity<List<Book>>(HttpStatus.OK);
+                
+        
     }
 
 
