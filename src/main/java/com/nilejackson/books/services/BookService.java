@@ -20,6 +20,8 @@ public interface BookService {
     public List<Book> findAll();
 
     public List<Book> listBooks();
+
+    public Boolean isBookAvailable(String title);
     
     
 

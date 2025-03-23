@@ -85,6 +85,15 @@ public class BookServiceImpl implements BookService {
         .map(entity -> bookEntityToBook(entity))
         .collect(Collectors.toList());
     }
+
+    @Override 
+    public Boolean isBookAvailable(String title) {
+     List<BookEntity> books = bookRepository.findByTitleIgnoreCase(title);
+
+     return books.stream()
+     .anyMatch(book -> !book.isCheckedOut());
+     
+    }
         
 
     
