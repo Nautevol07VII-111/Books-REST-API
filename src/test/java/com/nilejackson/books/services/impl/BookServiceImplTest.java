@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Array;
@@ -177,6 +178,17 @@ public class BookServiceImplTest {
 
         assertTrue(resultIds.contains(1L));
         assertTrue(resultIds.contains(2L));
+    }
+
+    @Test
+    public void isBookAvailable_ReturnsFalse_WhenNoBookWithTitleExists() {
+        String title = "Non-existent Book";
+        when(bookrepository.findByTitleIgnoreCase(title)).thenReturn(Collections.emptyList());
+
+        Boolean result = underTest.isBookAvailable(title);
+
+        assertFalse(result);
+        verify(bookrepository).findByTitleIgnoreCase(title);
     }
            
 
