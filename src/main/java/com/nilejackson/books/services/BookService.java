@@ -22,6 +22,8 @@ public interface BookService {
     public List<Book> listBooks();
 
     public Boolean isBookAvailable(String title);
+
+    public Boolean bookIsUnavailable(String title);
     
     
 

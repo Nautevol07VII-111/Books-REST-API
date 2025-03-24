@@ -94,6 +94,13 @@ public class BookServiceImpl implements BookService {
      .anyMatch(book -> !book.isCheckedOut());
      
     }
+
+    @Override
+    public Boolean bookIsUnavailable(String title) {
+        List<BookEntity> books = bookRepository.findByTitleIgnoreCase(title);
+        //If book doesnt exist at all or all books under specific are checked Out
+        return books.isEmpty() || books.stream().allMatch(book -> book.isCheckedOut());
+    }
         
 
     
