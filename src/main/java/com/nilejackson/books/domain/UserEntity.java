@@ -28,11 +28,24 @@ public class UserEntity {
     @Column(unique = true)
     private String membershipId;
     
-    private LocalDate membershipStartDate;
-    private LocalDate membershipExpiryDate;
+    private LocalDate signUpDate;
     private boolean active;
 
-    public boolean isMembershipValid() {
-        return active && LocalDate.now().isBefore(membershipExpiryDate);
+    public void signUp() {
+        this.signUpDate = LocalDate.now();
+        this.active = true; 
     }
+
+    public boolean isMembershipValid() {
+        return active;
+}
+    public void deactivate() {
+        this.active = false; 
+    }
+
+    public void reactivate() {
+        this.active = true;
+    }
+
+    
 }
