@@ -20,6 +20,6 @@ public class User {
   private String name;
   private String email;
   private String membershipId;
-  private LocalDate membershipStartDate;  
-  private LocalDate membershipExpirDate;
+  private LocalDate signUpDate;  
+  private boolean active;
 }
