@@ -2,7 +2,6 @@ package com.nilejackson.books.domain;
 
 import java.util.List;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
+
 @Table(name = "books")
 public class Book {
     

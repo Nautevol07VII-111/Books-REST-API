@@ -13,7 +13,7 @@ import lombok.Data;
 @AllArgsConstructor
 
 @Builder
-@Entity
+
 @Table(name = "books")
 public class User {
   private Long id;
