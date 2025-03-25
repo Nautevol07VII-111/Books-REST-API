@@ -38,3 +38,7 @@ build/
 *.ctxt
 *.jar
 mtj.tmp/
+
+# Application properties
+src/main/resources/application.properties
+src/main/resources/application-*.properties
