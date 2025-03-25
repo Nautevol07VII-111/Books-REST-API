@@ -42,6 +42,9 @@ public class BookServiceImplTest {
     @Mock
     private BookService bookService;
 
+    @Mock(lenient = true)
+private BookRepository bookRepository;
+
    
     //This ensures that when we create or save a book, we can then have that same book returned(this helps solidify our persistence layer)
     @Test
