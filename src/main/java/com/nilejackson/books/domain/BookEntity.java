@@ -3,6 +3,7 @@ package com.nilejackson.books.domain;
 import java.io.ObjectInputFilter.Status;
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +24,9 @@ public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 100)
     private String author; 
+    @Column(unique = true)
     private String isbn;
     private String title; 
     private String genre;

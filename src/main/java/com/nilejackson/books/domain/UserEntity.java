@@ -23,6 +23,7 @@ public class UserEntity {
     private Long id;
     
     private String name;
+    @Column(unique = true)
     private String email;
     
     @Column(unique = true)
@@ -47,5 +48,5 @@ public class UserEntity {
         this.active = true;
     }
 
-    
+
 }
