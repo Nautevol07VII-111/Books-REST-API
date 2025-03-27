@@ -2,7 +2,6 @@ package com.nilejackson.books.domain;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
