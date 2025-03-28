@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.nilejackson.books.domain.Book;
 import com.nilejackson.books.services.BookService;
 
 @Controller //The controller annotation marks a class as a web controller(a thing that handles HTTP requests) which is a Spring Component. Due to the fact that the @Controller class is a Spring Component means that classes declared with this annotation are all eligble for dependency injection
+@RequestMapping("/book")//sets base path for all methods in class
 public class BookController {
 
     private final BookService bookService;
@@ -29,7 +32,7 @@ public class BookController {
     //Below we utilize something called a ResponseEntity which is an object from the Spring library that allows us to control things like response codes 
     //The @RequestBody annotation tells Spring to deserialize the request body into the annotated parameter. Ex: In this API incoming JSON in the request body is converted into book objects. 
     //@PutMapping maps HTTP PUT requests to this specific method
-    @PutMapping(path = "/book/{isbn}")
+    @PutMapping(path = "/{isbn}")
     public ResponseEntity<Book> createBook(@PathVariable final String isbn, @RequestBody final Book book) {
             book.setIsbn(isbn);
             final Book savedBook = bookService.createBook(book);
@@ -38,33 +41,36 @@ public class BookController {
         
     }
 
+   
+
 
     
-    @GetMapping(path = "/book/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<Book> retrieveBook(@PathVariable final Long id) {
         
         final Optional<Book> foundBook = bookService.findById(id);
-        return foundBook
-        .map(book -> new ResponseEntity<Book>(book, HttpStatus.OK))
-        .orElse(new ResponseEntity<Book>(HttpStatus.NOT_FOUND));
+       
+                return foundBook
+                .map(book -> new ResponseEntity<Book>(book, HttpStatus.OK))
+                .orElse(new ResponseEntity<>( HttpStatus.NOT_FOUND));
 
     }
 
-    @GetMapping("/book/available")
+    @GetMapping("/available")
     public ResponseEntity<List<Book>> getAllBooks() {
         List<Book> book = bookService.findAll();
 
         if(book.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } return new ResponseEntity<List<Book>>(HttpStatus.OK);
+        } return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/book/all")
+    @GetMapping(path = "/all")
     public ResponseEntity<List<Book>> listBooks() {
         List<Book> book =bookService.listBooks();
         if(book.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } return new ResponseEntity<List<Book>>(HttpStatus.OK);
+        } return new ResponseEntity<>(book, HttpStatus.OK);
                 
         
     }
