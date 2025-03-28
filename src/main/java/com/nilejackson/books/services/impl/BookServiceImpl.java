@@ -81,7 +81,7 @@ public class BookServiceImpl implements BookService {
         List<BookEntity> allBookEntities = bookRepository.findAll();
 
         return allBookEntities.stream()
-        .filter(entity -> !((BookEntity) entity).isCheckedOut())
+        .filter(entity -> !entity.isCheckedOut())
         .map(entity -> bookEntityToBook(entity))
         .collect(Collectors.toList());
     }

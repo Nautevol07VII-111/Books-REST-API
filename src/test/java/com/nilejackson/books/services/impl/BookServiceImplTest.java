@@ -140,16 +140,16 @@ private BookRepository bookRepository;
 
        List<Book> result = underTest.findAll();
 
-       assertEquals(2, result.size());
-
        List<Long> resultIds = result.stream()
        .map(Book::getId)
        .collect(Collectors.toList());
 
+       assertEquals(2, result.size());
        assertTrue(resultIds.contains(1L));
        assertTrue(resultIds.contains(2L));
        assertFalse(resultIds.contains(3L));
        assertFalse(resultIds.contains(4L));
+       assertTrue(result.stream().noneMatch(book -> book.getId().equals(4L)));
     }
 
 
@@ -193,6 +193,8 @@ private BookRepository bookRepository;
         assertFalse(result);
         verify(bookrepository).findByTitleIgnoreCase(title);
     }
+
+    
            
 
 }
