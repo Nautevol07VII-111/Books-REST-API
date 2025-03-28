@@ -41,23 +41,33 @@ public class BookServiceImpl implements BookService {
     //This is a helper method that converts our API book object into a database BookEntity
     private BookEntity bookToBookEntity(Book book) {
         //Below we us the builder pattern(a design pattern used to 'build' complex objects. By utilizing the build pattern we call a series of methods to set each property individually and finish with the build() call to create the object, this is different from using setters b/c each property we 'set' here is immutbale which can prevent bugs that could occur from unexpected property changes )
-        return BookEntity.builder()
+        BookEntity entity = BookEntity.builder()
+        
         .isbn(book.getIsbn())
         .id(book.getId())
         .genre(book.getGenre())
         .title(book.getTitle())
         .author(book.getAuthor())
         .build();
+
+        
+
+        entity.setCheckedOut(book.isCheckedOut());
+
+        return entity;
     }
     //The helper method below converts  database entites back into API models(does the opposite of the method above) which completes the two way translation between our layers 
     private Book bookEntityToBook(BookEntity bookEntity) {
-        return Book.builder()
+        Book book = Book.builder()
         .isbn(bookEntity.getIsbn())
         .id(bookEntity.getId())
         .genre(bookEntity.getGenre())
         .title(bookEntity.getTitle())
         .author(bookEntity.getAuthor())
         .build();
+        book.setCheckedOut(bookEntity.isCheckedOut());
+
+        return book;
     }
 
     @Override
