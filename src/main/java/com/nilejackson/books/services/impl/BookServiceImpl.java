@@ -58,6 +58,9 @@ public class BookServiceImpl implements BookService {
     }
     //The helper method below converts  database entites back into API models(does the opposite of the method above) which completes the two way translation between our layers 
     private Book bookEntityToBook(BookEntity bookEntity) {
+      
+        if (bookEntity == null) return null;
+
         Book book = Book.builder()
         .isbn(bookEntity.getIsbn())
         .id(bookEntity.getId())
