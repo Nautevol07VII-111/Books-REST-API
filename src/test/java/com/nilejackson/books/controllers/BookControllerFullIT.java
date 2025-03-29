@@ -13,7 +13,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -105,17 +107,18 @@ public class BookControllerFullIT {
     public void testThatGetAllBooksReturnsBookList() throws Exception {
      
         final Book book = TestData.testBook();
-        bookService.createBook(book);
+        book.setCheckedOut(false); 
+    bookService.createBook(book);
 
         Book savedBook = book;
         savedBook.setId(1L);
 
         when(bookService.createBook(any(Book.class))).thenReturn(savedBook);
-        when(bookService.findAll()).thenReturn(Collections.singletonList(savedBook));
+        when(bookService.listBooks()).thenReturn(Collections.singletonList(savedBook));
 
 
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/book/"))
+       
+        mockMvc.perform(MockMvcRequestBuilders.get("/book/all"))
         .andExpect(status().isOk());
 
 
