@@ -13,6 +13,8 @@ import com.nilejackson.books.domain.BookEntity;
 public interface BookService {
    
     Book createBook(Book book);
+
+    public Long getId(Long Id);
     
     
     public Optional<Book> findById(Long Id);

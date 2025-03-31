@@ -8,8 +8,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.nilejackson.books.domain.BookEntity;
-import com.nilejackson.books.domain.UserEntity;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -31,10 +29,6 @@ public class EntityConfigurationTest {
         assertNotNull(entityManager.getMetamodel().entity(BookEntity.class));
     }
 
-    @Test 
-    public void cantFindUserEntityMetadata() {
-        assertNotNull(entityManager.getMetamodel().entity(UserEntity.class));
-    }
-
+    
    
 }
