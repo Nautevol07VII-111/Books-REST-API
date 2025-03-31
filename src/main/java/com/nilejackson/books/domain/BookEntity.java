@@ -12,8 +12,10 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode
 @Data //Calling Lombok to generate boilerplate 
 @AllArgsConstructor
 @NoArgsConstructor //Added this constructor generator because SpringBoot actually does look for a no args constructor/ JPA Hibernate needs this for entity instances when loading from db--JSON also uses this to instantiate objects during serialization 
@@ -34,7 +36,7 @@ public class BookEntity {
     private Status status;
     private Date checkOutDate;
 
-    public void checkOut() {
+    public void checkedOut() {
         this.isCheckedOut = true;
     }
 
@@ -46,5 +48,13 @@ public class BookEntity {
     public boolean isCheckedOut() {
         
         return this.isCheckedOut;
+    }
+
+    public void setCheckedOut(boolean checkedOut) {
+        if (checkedOut) {
+            isCheckedOut();
+        } else {
+            returnBook();
+        }
     }
 }
