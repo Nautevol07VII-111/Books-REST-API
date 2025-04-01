@@ -26,6 +26,8 @@ public interface BookService {
     public Boolean isBookAvailable(String title);
 
     public Boolean bookIsUnavailable(String title);
+
+    public  void deleteById(Long id);
     
     
 
