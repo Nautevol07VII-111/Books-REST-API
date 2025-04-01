@@ -80,7 +80,7 @@ public class BookController {
         
         Optional<Book> book = bookService.findById(id);
         if(!book.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         bookService.deleteById(id);
