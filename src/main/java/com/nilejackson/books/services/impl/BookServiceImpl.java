@@ -122,4 +122,9 @@ public class BookServiceImpl implements BookService {
         
         return entity;
     }
+
+    @Override 
+    public void deleteById(Long id) {
+        bookRepository.deleteById(id);
+    }
 }
