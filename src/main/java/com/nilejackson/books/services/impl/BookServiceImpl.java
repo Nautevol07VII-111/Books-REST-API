@@ -127,4 +127,21 @@ public class BookServiceImpl implements BookService {
     public void deleteById(Long id) {
         bookRepository.deleteById(id);
     }
+
+    @Override
+    public  List<Book> saveAll(List<Book> books) {
+        List<BookEntity> entities = books.stream()
+        .map(this::bookToBookEntity)
+        .collect(Collectors.toList());
+        List<BookEntity> savedEntities = bookRepository.saveAll(entities);
+        return savedEntities.stream()
+        .map(this::bookEntityToBook)
+        .collect(Collectors.toList());
+    }
+
+    @Override
+    public long count() {
+        return bookRepository.count();
+    }
+
 }
