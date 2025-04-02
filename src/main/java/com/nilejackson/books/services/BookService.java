@@ -28,6 +28,10 @@ public interface BookService {
     public Boolean bookIsUnavailable(String title);
 
     public  void deleteById(Long id);
+
+    public List<Book> saveAll(List<Book> books);
+
+    public long count();
     
     
 
